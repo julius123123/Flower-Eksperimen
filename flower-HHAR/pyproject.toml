@@ -1,0 +1,59 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "quickstart-pytorch"
+version = "1.1.13"
+description = "Federated Learning with PyTorch and Flower (Quickstart Example)"
+license = {file = "LICENSE"}
+dependencies = [
+    "flwr[simulation]>=1.36.0",
+    "torch",
+    "scikit-learn",
+    "numpy",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
+
+[tool.flwr.app]
+publisher = "flwrlabs"
+fab-format-version = 1
+flwr-version-target = "1.36.0"
+
+[tool.flwr.app.components]
+serverapp = "flwrCode.server_app:app"
+clientapp = "flwrCode.client_app:app"
+
+[tool.flwr.app.config]
+num-server-rounds = 40
+fraction-evaluate = 1.0
+local-epochs = 1
+learning-rate = 0.01
+batch-size = 64
+save-model = true
+# Path ke hasil prep.py
+data-path = 'C:\Users\User\Documents\ITB\TA\Code\CobaFlower\flower-HHAR\hhar_windows.npz'
+
+
+#######################################################################
+# CONFIGURATION MIGRATION NOTICE:
+#
+# What was previously called "federation config" for SuperLink
+# connections in pyproject.toml has been renamed and moved.
+#
+# These settings are now **SuperLink connection configuration**
+# and are defined in the Flower configuration file.
+#
+# The entries below are commented out intentionally and are kept
+# only as a migration reference.
+#
+# Docs: https://flower.ai/docs/framework/ref-flower-configuration.html
+#######################################################################
+
+# [tool.flwr.federations]
+# default = "local-simulation"
+
+# [tool.flwr.federations.local-simulation]
+# options.num-supernodes = 9
